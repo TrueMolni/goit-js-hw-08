@@ -4,7 +4,7 @@ import throttle from 'lodash.throttle';
 const STORAGE_KEY = 'videoplayer-current-time';
 
 //створюємо відеоплеєр
-iframe = document.querySelector('iframe');
+const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 
 //методом оn() відслідковуємо зміну часу в плеєрі, не частіше разу на сек
