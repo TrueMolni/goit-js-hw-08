@@ -11,18 +11,9 @@ const player = new Player(iframe);
 player.on('timeupdate', throttle(onPlay, 1000));
 
 //зберігаємо в локальне сховище дані з плеєру
-function onPlay(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+function onPlay({ seconds }) {
+  localStorage.setItem(STORAGE_KEY, seconds);
 }
 
 //підгружаємо дані після оновлення сторінки, якщо вони є
-function getCurrentTime() {
-  const savedData = localStorage.getItem(STORAGE_KEY);
-  if (savedData) {
-    const parsedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    // відновлюємо відтворення відео з попереднього моменту
-    player.setCurrentTime(parsedData.seconds);
-  }
-}
-// викликаємо функцію, щоб все працювало
-getCurrentTime();
+if (STORAGE_KEY) player.setCurrentTime(localStorage.getItem(STORAGE_KEY));
