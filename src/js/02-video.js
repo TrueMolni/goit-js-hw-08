@@ -7,7 +7,7 @@ const STORAGE_KEY = 'videoplayer-current-time';
 iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 
-//методом оn() відслідковуємо зміну часу в плеєрі, не частіше разу в сек
+//методом оn() відслідковуємо зміну часу в плеєрі, не частіше разу на сек
 player.on('timeupdate', throttle(onPlay, 1000));
 
 //зберігаємо в локальне сховище дані з плеєру
