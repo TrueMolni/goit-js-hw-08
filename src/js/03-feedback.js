@@ -11,6 +11,7 @@ const refs = {
 // основні змінні
 const formData = {};
 const FORM_KEY = 'user-form-data';
+const parsedData = JSON.parse(localStorage.getItem(FORM_KEY));
 
 //додаємо слухачів подій для делегування форми
 refs.formRef.addEventListener('submit', onSubmitHandle);
@@ -29,10 +30,8 @@ function onFormHandle() {
 
 // ф-ія для загрузки зі сховища валідного js об'єкту
 function loadFormData() {
-  if (formData) {
+  if (parsedData) {
     try {
-      const parsedData = JSON.parse(localStorage.getItem(FORM_KEY));
-
       const savedMessage = parsedData.message;
       const savedEmail = parsedData.email;
 
@@ -44,7 +43,7 @@ function loadFormData() {
         refs.inputRef.value = savedEmail;
       }
     } catch (error) {
-      console.log('Ouch!');
+      console.log(error.name);
     }
   }
 }
@@ -52,9 +51,10 @@ function loadFormData() {
 // обробник події submit. очищує форму і дані з локального сховища
 function onSubmitHandle(event) {
   event.preventDefault();
-  const parsedData = JSON.parse(localStorage.getItem(FORM_KEY));
-  console.log('comment: ', parsedData.message);
-  console.log('email: ', parsedData.email);
-  event.currentTarget.reset();
-  localStorage.removeItem(FORM_KEY);
+
+  if (formData.email && formData.message) {
+    console.log(formData);
+    event.currentTarget.reset();
+    localStorage.removeItem(FORM_KEY);
+  }
 }
