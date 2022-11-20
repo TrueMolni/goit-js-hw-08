@@ -12,8 +12,19 @@ player.on('timeupdate', throttle(onPlay, 1000));
 
 //зберігаємо в локальне сховище дані з плеєру
 function onPlay({ seconds }) {
-  localStorage.setItem(STORAGE_KEY, seconds);
+  try {
+    localStorage.setItem(STORAGE_KEY, seconds);
+  } catch (error) {
+    console.log(`an ${error.name} has arived!`);
+    return [];
+  }
 }
 
 //підгружаємо дані після оновлення сторінки, якщо вони є
-if (STORAGE_KEY) player.setCurrentTime(localStorage.getItem(STORAGE_KEY));
+function load() {
+  const savedTime = localStorage.getItem(STORAGE_KEY);
+  if (savedTime) {
+    player.setCurrentTime(savedTime);
+  }
+}
+load();
